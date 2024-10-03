@@ -36,7 +36,7 @@ const Experiences = () => {
             <h2 className="text-center">Experience</h2>
             <div className="timeline">
                 {experienceData.map((item)=>(
-                    <Experience exp={item}></Experience>
+                    <Experience exp={item} key={item.id}></Experience>
                 ))}
             </div>
         </div>
