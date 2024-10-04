@@ -9,6 +9,7 @@ const Contact = () => {
   }, [setTitle]);
 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [formValidation, setFormValidation] = useState({ name: "", email: "", message: "" });
   const [toast, setToast] = useState({ show: false, type: "", message: "" });
 
   const handleChange = (e) => {
@@ -18,6 +19,35 @@ const Contact = () => {
       [name]: value,
     }));
   };
+
+  const handleContactFormValidation = (e) => {
+    e.preventDefault();
+
+    let errors = {};
+
+    if (!form.name) {
+        errors.name = "Your Name field is required!";
+    }
+
+    if (!form.email) {
+        errors.email = "Email field is required!";
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+        errors.email = "Email is invalid!";
+    }
+
+    if (!form.message) {
+        errors.message = "Message field is required!";
+    }
+
+    if (Object.keys(errors).length > 0) {
+        setFormValidation(errors);
+        return;
+    }
+
+    handleContactForm(e);
+
+  };
+
 
   const handleContactForm = async (e) => {
     e.preventDefault();
@@ -68,7 +98,7 @@ const Contact = () => {
       <section className="bg-dark text-light py-5">
         <div className="container">
           <h2 className="text-center">Contact</h2>
-          <form className="mt-4" onSubmit={handleContactForm}>
+          <form className="mt-4" onSubmit={handleContactFormValidation}>
             <div className="row">
               <div className="col-md-6 mb-3">
                 <input
@@ -79,16 +109,18 @@ const Contact = () => {
                   value={form.name}
                   onChange={handleChange}
                 ></input>
+                <span className="text-denger">{formValidation.name}</span>
               </div>
               <div className="col-md-6 mb-3">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   name="email"
                   placeholder="Your Email"
                   value={form.email}
                   onChange={handleChange}
                 ></input>
+                <span className="text-denger">{formValidation.email}</span>
               </div>
             </div>
             <div className="mb-3">
@@ -100,6 +132,7 @@ const Contact = () => {
                 value={form.message}
                 onChange={handleChange}
               ></textarea>
+              <span className="text-denger">{formValidation.message}</span>
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-primary">
