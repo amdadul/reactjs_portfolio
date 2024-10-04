@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { TitleContext } from "../context/TitleProvider";
 
 const Project = () => {
-    const {url} = useParams();
-    console.log(url);
-    //const [project,setProject] = useState(null);
+  const { url } = useParams();
+  console.log(url);
+  //const [project,setProject] = useState(null);
 
-    /* useEffect(() => {
+  /* useEffect(() => {
         fetch(`https://jsonplaceholder.typicode.com/posts/${url}/comments`)  // Example API request
           .then(response => {
             return response.json();
@@ -18,37 +19,49 @@ const Project = () => {
 
     console.log(project); */
 
-    const project = {
-        title: 'Awesome Web App',
-        banner: '/assets/project-banner.jpg',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-        technologies: ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js'],
-        features: ['Responsive Design', 'User Authentication', 'Real-time Updates'],
-        challenges: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-        images: ['/assets/project-image1.jpg', '/assets/project-image2.jpg', '/assets/project-image3.jpg'],
-        client: 'Example Client',
-        date: 'March 2024',
-        category: 'Web Development',
-        website: 'http://example.com'
-      };
+  const project = {
+    title: "Awesome Web App",
+    banner: "/assets/project-banner.jpg",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    technologies: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+    features: ["Responsive Design", "User Authentication", "Real-time Updates"],
+    challenges: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    images: [
+      "/assets/project-image1.jpg",
+      "/assets/project-image2.jpg",
+      "/assets/project-image3.jpg",
+    ],
+    client: "Example Client",
+    date: "March 2024",
+    category: "Web Development",
+    website: "http://example.com",
+  };
 
-      if (!project) {
-        return <div>Loading...</div>;
-      }
+  if (!project) {
+    return <div>Loading...</div>;
+  }
+
+  const { setTitle } = useContext(TitleContext);
+  useEffect(() => {
+    setTitle(project.title+` - Amdadul Hoque's Portfolio`);
+  }, [setTitle]);
 
   return (
     <>
       {/* Banner Section */}
-      <section className="banner" style={{
-        backgroundImage: `url(${project.banner})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '300px',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
+      <section
+        className="banner"
+        style={{
+          backgroundImage: `url(${project.banner})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "300px",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <h1>{project.title}</h1>
       </section>
 
@@ -80,7 +93,11 @@ const Project = () => {
             <div className="row g-3">
               {project.images.map((image, index) => (
                 <div key={index} className="col-md-4">
-                  <img src={image} alt={`Project Screenshot ${index + 1}`} className="img-fluid rounded" />
+                  <img
+                    src={image}
+                    alt={`Project Screenshot ${index + 1}`}
+                    className="img-fluid rounded"
+                  />
                 </div>
               ))}
             </div>
@@ -92,22 +109,39 @@ const Project = () => {
               <div className="card-body">
                 <h4>Project Info</h4>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item"><strong>Client:</strong> {project.client}</li>
-                  <li className="list-group-item"><strong>Date:</strong> {project.date}</li>
-                  <li className="list-group-item"><strong>Category:</strong> {project.category}</li>
-                  <li className="list-group-item"><strong>Website:</strong> <a href={project.website} target="_blank" rel="noopener noreferrer">{project.website}</a></li>
+                  <li className="list-group-item">
+                    <strong>Client:</strong> {project.client}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Date:</strong> {project.date}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Category:</strong> {project.category}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Website:</strong>{" "}
+                    <a
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {project.website}
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="text-center">
-              <a href="/projects" className="btn btn-primary">Back to Projects</a>
+              <a href="/projects" className="btn btn-primary">
+                Back to Projects
+              </a>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Project
+export default Project;

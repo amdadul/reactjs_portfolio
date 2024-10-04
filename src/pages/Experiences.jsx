@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Experience from '../components/Experience';
+import { TitleContext } from '../context/TitleProvider';
 
 const Experiences = () => {
+
+  const { setTitle } = useContext(TitleContext);
+  useEffect(() => {
+    setTitle(`Experiences - Amdadul Hoque's Portfolio`);
+  }, [setTitle]);
 
     const experienceData = [
         {
